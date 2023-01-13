@@ -30,7 +30,7 @@ def getScale(title, xLabel, yLabel):
     return 'scaleError'
 
 
-def getNamedEntity(title, xValueArr):
+def getNamedEntity(title, xValueArr, xLabel):
     doc = nlp(title)
     entities = {}
     entities['Subject'] = []
@@ -240,17 +240,6 @@ def getMultiColumnScale(title, labels):
                 return titleToken
     return 'scaleError'
 
-goldPath = '../data/test/testOriginalSummary.txt'
-goldTemplatePath = '../data/test/testSummary.txt'
-dataPath = '../data/test/testData.txt'
-titlePath = '../data/test/testTitle.txt'
-
-analysisPath = '../results/aug17/analysis-p80.txt'
-generatedPath = '../results/aug17/templateOutput-p80.txt'
-comparisonPath = '../results/aug17/summaryComparison-p80.txt'
-outputPath = '../results/aug17/generated-p80.txt'
-websitePath = '../results/aug17/generated'
-newDataPath = '../results/aug17/data'
 
 nlp = spacy.load('en_core_web_md')
 fb = FitBert()
@@ -438,7 +427,7 @@ def post_processing(captions, data_inputs, titles):
                     cleanYArr.append(datum[i].split('|')[1].replace('_', ' '))
 
             sentences = generated.split(' . ')
-            entities = getNamedEntity(title, xValueArr)
+            entities = getNamedEntity(title, xValueArr, xLabel)
             # titleEntities = [word[0].lower() for word in entities.values() if len(word) > 0]
             titleArr = [word for word in title.split() if word.lower() not in fillers]
             # titleArr = [word for word in titleArr if word.lower() not in titleEntities]

@@ -8,9 +8,11 @@ import pandas as pd
 from preprocessing.preprocess import Preprocessor
 from model.summarize import Model
 from postprocessing.postprocess import post_processing
+import nltk
+
 router = APIRouter()
 model = Model("model/aug17-80.pth")
-
+nltk.download('punkt')
 @router.post("/describe/")
 async def describe(title: str = Form(...), file: UploadFile = File(...)):
     try:

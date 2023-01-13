@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  # test:
+  #     image: tensorflow/tensorflow:latest-gpu
+  #     command: python -c "import tensorflow as tf;tf.test.gpu_device_name()"
+  #     deploy:
+  #       resources:
+  #         reservations:
+  #           devices:
+  #           - driver: nvidia
+  #             device_ids: ['0']
+  #             capabilities: [gpu]
+  app:
+    container_name:  app
+    build: .
+    command: bash -c "uvicorn main:app --host 0.0.0.0 --port 5001 --reload"
+    volumes:
+      - ./app:/app
+    ports:
+      - 5001:5001
+    restart: always
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            device_ids: ['0']
+            capabilities: [gpu]
+  
